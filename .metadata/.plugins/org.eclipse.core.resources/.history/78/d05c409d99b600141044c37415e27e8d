@@ -1,0 +1,60 @@
+package com;
+
+import java.util.Random;
+
+public class Battle implements Hit {
+	static final int LATITUDE = 10;
+	static final int ALTITUDE = 10;
+	static int[][] battlefield = new int[LATITUDE][ALTITUDE];
+	static int[] shoot = new int[2];
+	static Random random = new Random();
+
+	public static void main(String[] args) {
+		initBattlefield(battlefield);
+		initShips();
+		
+
+	}
+
+	// Battlefield initialization
+	public static void initBattlefield(int[][] battlefield) {
+		for (int row = 0; row < LATITUDE; row++)
+			for (int column = 0; column < ALTITUDE; column++)
+				battlefield[row][column] = -1;
+	}
+
+	// Ships initialization
+	public static void initShips() {
+		for (int row = 0; row < battlefield.length; row++) {
+			for (int colum = 0; colum < battlefield[0].length; colum++) {
+				if (random.nextBoolean())
+					battlefield[row][colum] = 0;
+			}
+		}
+		
+
+		int shootedRow = random.nextInt(LATITUDE-1);
+		int shootedColumn = random.nextInt(ALTITUDE-1);
+		
+		System.out.println("Tartget field: ["+shootedRow+"]["+shootedColumn+"]");
+		
+		if(battlefield[LATITUDE][ALTITUDE]==0)System.out.println("true");
+		else System.out.println("False");
+
+	}
+
+	
+	// Implement the shooting() from Hit interface
+	public boolean shooting() {
+
+		int shootedRow = random.nextInt(LATITUDE);
+		int shootedColumn = random.nextInt(ALTITUDE);
+		
+		System.out.println("Tartget field: ["+shootedRow+"]["+shootedColumn+"]");
+		
+		if(battlefield[LATITUDE][ALTITUDE]==0)return true;
+		
+		return false;
+	}
+
+}

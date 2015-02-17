@@ -1,0 +1,31 @@
+package com;
+
+public class Ship {
+	
+ public int [][] ship = null;
+ 
+ public Ship(int length,boolean height){
+	if(height){
+		this.ship =  new int [3][2];
+		init();
+	}
+	 
+ }
+
+private void init() {
+	for(int row=0;row<ship.length;row++){
+		for(int column=0;column<ship[0].length;column++){
+			ship[row][column] = 0;
+		}
+	}
+	ship[0][0] = -1;
+	ship[2][0] = -1;
+	
+}
+
+public int[][] getShip() {
+	return ship;
+}
+ 
+
+}

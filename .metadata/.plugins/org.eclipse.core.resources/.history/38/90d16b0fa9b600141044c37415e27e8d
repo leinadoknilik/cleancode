@@ -1,0 +1,15 @@
+package com;
+
+public class GamePlay {
+	
+	public static void main(String[] args) {
+	
+		Battle newBattle = new Battle();
+		
+		newBattle.initBattlefield();
+		newBattle.initShips();
+		newBattle.shooting();
+		
+	}
+
+}

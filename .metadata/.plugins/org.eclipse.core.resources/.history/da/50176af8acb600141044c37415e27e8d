@@ -1,0 +1,24 @@
+package com;
+
+public class GamePlay {
+	
+	public static void main(String[] args) {
+	
+//		Battle newBattle = new Battle();
+//
+//		newBattle.initBattlefield();
+//		newBattle.initShips();
+//		newBattle.shooting();
+//		newBattle.showBoard();
+		
+		Ship s = new Ship(3, true);
+		int [] [] dummy = s.getShip();
+		
+		for(int row=0;row<dummy.length;row++){
+			for(int column=0;column<dummy[0].length;column++){
+				dummy[row][column] = 0;
+			}
+
+	}
+
+}

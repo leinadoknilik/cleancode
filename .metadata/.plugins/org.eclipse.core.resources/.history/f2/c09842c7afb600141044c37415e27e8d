@@ -1,0 +1,393 @@
+
+002
+import java.io.IOException;
+003
+import java.util.Random;
+004
+import java.util.Scanner;
+005
+ 
+006
+public class Battleship {
+007
+ 
+008
+    public static void main(String[] args) {
+009
+        int[][] board = new int[5][5];
+010
+        int[][] ships = new int[3][2];
+011
+        int[] shoot = new int[2];
+012
+        int attempts=0,
+013
+            shotHit=0;
+014
+         
+015
+        initBoard(board);
+016
+        initShips(ships);
+017
+        int ammo = Integer.parseInt(args[0]);
+018
+        int seeds = Integer.parseInt(args[1]); 
+019
+        int boat;      
+020
+        boat = 0;
+021
+        File file = new File(args[2]);
+022
+        if (ammo < 0) {
+023
+            System.out.println("ERROR - AMMO NOT GREATER THAN ZERO");
+024
+        }
+025
+        if (seeds < 0) {
+026
+            System.out.println("ERROR - SEED LESS THAN ZERO");
+027
+        }
+028
+        if (!args[2].contains(".txt")) {
+029
+            System.out.println("ERROR - FILE DOES NOT END WITH .TXT"); }
+030
+        Scanner sc = null;
+031
+        try{
+032
+            sc = new Scanner(file);
+033
+        } catch (IOException e) {
+034
+            System.out.println("ERROR - FILE DOES NOT EXIST");
+035
+            System.exit(0);
+036
+        }
+037
+        String line = sc.nextLine();
+038
+        if (line.contains(", ")) {
+039
+            String[] parts = line.split(", ");
+040
+            String rowsize = (parts[0]);
+041
+            String colsize = (parts[1]);
+042
+            int rows = Integer.parseInt(rowsize);
+043
+            int cols = Integer.parseInt(colsize);
+044
+            char[][] myArray = new char[rows][cols];   
+045
+             
+046
+            for(int k = 0; k < cols; k++) {
+047
+                System.out.print("=");
+048
+            }
+049
+            for(int i = 0; i < rows; i++) {
+050
+                System.out.println("");
+051
+                for(int j = 0; j < cols; j++) {
+052
+                    System.out.print("*");
+053
+                }
+054
+            }
+055
+            System.out.println("");
+056
+            for(int k = 0; k < cols; k++) {
+057
+                System.out.print("=");
+058
+            }
+059
+ 
+060
+            while(sc.hasNextLine()) {
+061
+                line = sc.nextLine();
+062
+                 
+063
+                //System.out.println(line);
+064
+                if (line.length() != cols) {
+065
+                    System.out.println("ERROR - COL MISMATCH");
+066
+                    System.exit(0); }
+067
+ 
+068
+                if (!line.matches("[=*B]+")) {
+069
+                    System.out.println("ERROR - UNKNOWN SYMBOL");
+070
+                    System.exit(0); }  
+071
+ 
+072
+                if (line.indexOf("B") != -1) {
+073
+                    boat = ++boat;
+074
+                }
+075
+            }  
+076
+        if (boat < 1 ) {
+077
+            System.out.println("ERROR - NO BOAT");
+078
+            System.exit(0); }
+079
+     
+080
+        }
+081
+         
+082
+        System.out.println();
+083
+         
+084
+        do{
+085
+            showBoard(board);
+086
+            shoot(shoot);
+087
+            attempts++;
+088
+             
+089
+            if(hit(shoot,ships)){
+090
+                hint(shoot,ships,attempts);
+091
+                shotHit++;
+092
+            }               
+093
+            else
+094
+                hint(shoot,ships,attempts);
+095
+             
+096
+            changeboard(shoot,ships,board);
+097
+             
+098
+ 
+099
+        }while(shotHit!=3);
+100
+         
+101
+        System.out.println("\n\n\nBattleship Java game finished! You hit 3 ships in "+attempts+" attempts");
+102
+        showBoard(board);
+103
+    }
+104
+     
+105
+    public static void initBoard(int[][] board){
+106
+        for(int row=0 ; row < 5 ; row++ )
+107
+            for(int column=0 ; column < 5 ; column++ )
+108
+                board[row][column]=-1;
+109
+    }
+110
+     
+111
+    public static void showBoard(int[][] board){
+112
+        System.out.println("\t1 \t2 \t3 \t4 \t5");
+113
+        System.out.println();
+114
+         
+115
+        for(int row=0 ; row < 5 ; row++ ){
+116
+            System.out.print((row+1)+"");
+117
+            for(int column=0 ; column < 5 ; column++ ){
+118
+                if(board[row][column]==-1){
+119
+                    System.out.print("\t"+"~");
+120
+                }else if(board[row][column]==0){
+121
+                    System.out.print("\t"+"*");
+122
+                }else if(board[row][column]==1){
+123
+                    System.out.print("\t"+"X");
+124
+                }
+125
+                 
+126
+            }
+127
+            System.out.println();
+128
+        }
+129
+ 
+130
+    }
+131
+ 
+132
+    public static void initShips(int[][] ships){
+133
+        Random random = new Random();
+134
+         
+135
+        for(int ship=0 ; ship < 3 ; ship++){
+136
+            ships[ship][0]=random.nextInt(5);
+137
+            ships[ship][1]=random.nextInt(5);
+138
+             
+139
+            //let's check if that shot was already tried
+140
+            //if it was, just finish the do...while when a new pair was randomly selected
+141
+            for(int last=0 ; last < ship ; last++){
+142
+                if( (ships[ship][0] == ships[last][0])&&(ships[ship][1] == ships[last][1]) )
+143
+                    do{
+144
+                        ships[ship][0]=random.nextInt(5);
+145
+                        ships[ship][1]=random.nextInt(5);
+146
+                    }while( (ships[ship][0] == ships[last][0])&&(ships[ship][1] == ships[last][1]) );
+147
+            }
+148
+             
+149
+        }
+150
+    }
+151
+ 
+152
+    public static void shoot(int[] shoot){
+153
+        Scanner input = new Scanner(System.in);
+154
+         
+155
+        System.out.print("Row: ");
+156
+        shoot[0] = input.nextInt();
+157
+        shoot[0]--;
+158
+         
+159
+        System.out.print("Column: ");
+160
+        shoot[1] = input.nextInt();
+161
+        shoot[1]--;
+162
+         
+163
+    }
+164
+     
+165
+    public static boolean hit(int[] shoot, int[][] ships){
+166
+         
+167
+        for(int ship=0 ; ship<ships.length ; ship++){
+168
+            if( shoot[0]==ships[ship][0] && shoot[1]==ships[ship][1]){
+169
+                System.out.printf("You hit a ship located in (%d,%d)\n",shoot[0]+1,shoot[1]+1);
+170
+                return true;
+171
+            }
+172
+        }
+173
+        return false;
+174
+    }
+175
+ 
+176
+    public static void hint(int[] shoot, int[][] ships, int attempt){
+177
+        int row=0,
+178
+            column=0;
+179
+         
+180
+        for(int line=0 ; line < ships.length ; line++){
+181
+            if(ships[line][0]==shoot[0])
+182
+                row++;
+183
+            if(ships[line][1]==shoot[1])
+184
+                column++;
+185
+        }
+186
+         
+187
+        System.out.printf("\nHint %d: \nRow %d -> %d ships\n" +
+188
+                                 "Column %d -> %d ships\n",attempt,shoot[0]+1,row,shoot[1]+1,column);
+189
+    }
+190
+ 
+191
+    public static void changeboard(int[] shoot, int[][] ships, int[][] board){
+192
+        if(hit(shoot,ships))
+193
+            board[shoot[0]][shoot[1]]=1;
+194
+        else
+195
+            board[shoot[0]][shoot[1]]=0;
+196
+    }
+197
+}

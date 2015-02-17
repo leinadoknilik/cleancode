@@ -1,0 +1,47 @@
+package com;
+
+import java.util.Random;
+
+public class Battle implements Hit {
+	static final int LATITUDE = 10;
+	static final int ALTITUDE = 10;
+	static int[][] battlefield = new int[LATITUDE][ALTITUDE];
+	static int[] shoot = new int[2];
+	Random random = new Random();
+
+	// Battlefield initialization
+	public void initBattlefield() {
+		for (int row = 0; row < LATITUDE; row++)
+			for (int column = 0; column < ALTITUDE; column++)
+				battlefield[row][column] = -1;
+	}
+
+	// Ships initialization
+	public void initShips() {
+		for (int row = 0; row < battlefield.length; row++) {
+			for (int colum = 0; colum < battlefield[0].length; colum++) {
+				if (random.nextBoolean())
+					battlefield[row][colum] = 0;
+			}
+		}
+
+	}
+
+	// Implement the shooting() from Hit interface
+	public boolean shooting() {
+
+		int shootedRow = random.nextInt(LATITUDE);
+		int shootedColumn = random.nextInt(ALTITUDE);
+
+		if (battlefield[shootedRow][shootedColumn] == 0) {
+			System.out.println("Tartget field: [" + shootedRow + "]["
+					+ shootedColumn + "]");
+			System.out.println("Target destroyed!");
+			return true;
+		} else {
+			System.out.println("Target missed!");
+			return false;
+		}
+	}
+
+}

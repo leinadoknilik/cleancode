@@ -1,0 +1,18 @@
+package com;
+
+import java.util.ArrayList;
+
+public class Fleet {
+	
+	static ArrayList <Ship> fleet = new ArrayList<Ship> ();
+
+	public Fleet(Ship s)
+	{
+	 fleet.add(s);
+	}
+
+	public static ArrayList<Ship> getFleet() {
+		return fleet;
+	}
+	
+}

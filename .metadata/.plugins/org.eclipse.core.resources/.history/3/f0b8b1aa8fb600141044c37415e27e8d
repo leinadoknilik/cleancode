@@ -1,0 +1,17 @@
+package com;
+
+public class Battle implements Hit {
+	
+	static final int LATITUDE = 10;
+	static final int ALTITUDE = 10;
+	int [][] battlefield= new int [LATITUDE][ALTITUDE];
+	
+	  public static void initBoard(int[][] battlefield){
+	        for(int row=0 ; row < 5 ; row++ )
+	            for(int column=0 ; column < 5 ; column++ )
+	                board[row][column]=-1;
+	    }
+	    
+	
+	
+}

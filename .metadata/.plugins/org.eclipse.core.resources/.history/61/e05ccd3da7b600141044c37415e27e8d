@@ -1,0 +1,10 @@
+package com;
+
+import java.awt.List;
+import com.Ship;
+
+public class Fleet {
+	
+	List <Ship> fleet = new List ();
+
+}

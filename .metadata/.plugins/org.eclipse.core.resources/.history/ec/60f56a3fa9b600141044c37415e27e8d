@@ -1,0 +1,93 @@
+package com;
+
+import java.util.Random;
+
+public class Battle implements Hit {
+	static final int ROW = 10;
+	static final int COLUMN = 10;
+	static int[][] battlefield = new int[ROW][COLUMN];
+	Random random = new Random();
+	 static int[][] ships = new int[4][2];
+
+	// Battlefield initialization
+	public void initBattlefield() {
+		for (int row = 0; row < ROW; row++)
+			for (int column = 0; column < COLUMN; column++)
+				battlefield[row][column] = -1;
+	}
+//
+//	// Ships initialization
+//	public void initShips() {
+//		
+//		
+//		for (int row = 0; row < battlefield.length; row++) {
+//			for (int colum = 0; colum < battlefield[0].length; colum++) {
+//				if (random.nextBoolean()){
+//					
+//				}
+//			}
+//		}
+//
+//	}
+	
+	public static void initShips(){
+        Random random = new Random();
+        
+        for(int ship=0 ; ship < 4 ; ship++){
+            ships[ship][0]=random.nextInt(ROW);
+            ships[ship][1]=random.nextInt(COLUMN);
+            
+            //let's check if that shot was already tried 
+            //if it was, just finish the do...while when a new pair was randomly selected
+            for(int last=0 ; last < ship ; last++){
+                if( (ships[ship][0] == ships[last][0])&&(ships[ship][1] == ships[last][1]) )
+                    do{
+                        ships[ship][0]=random.nextInt(ROW);
+                        ships[ship][1]=random.nextInt(COLUMN);
+                    }while( (ships[ship][0] == ships[last][0])&&(ships[ship][1] == ships[last][1]) );
+            }
+            
+        }
+	}
+
+	// Implement the shooting() from Hit interface
+	public boolean shooting() {
+
+		int shootedRow = random.nextInt(ROW);
+		int shootedColumn = random.nextInt(COLUMN);
+		
+		System.out.println("Target field: [" + shootedRow + "]["
+				+ shootedColumn + "]");
+		
+		if (battlefield[shootedRow][shootedColumn] == 0) {
+			System.out.println("Enemy destroyed!");
+			return true;
+		} else {
+			System.out.println("Enemy missed!");
+			return false;
+		}
+	}
+	
+	 public static void showBoard(){
+	        System.out.println("\t1 \t2 \t3 \t4 \t5");
+	        System.out.println();
+	        
+	        for(int row=0 ; row < ROW ; row++ ){
+	            System.out.print((row+1)+"");
+	            for(int column=0 ; column < COLUMN ; column++ ){
+	                if(battlefield[row][column]==-1){
+	                    System.out.print("\t"+"~");
+	                }else if(battlefield[row][column]==0){
+	                    System.out.print("\t"+"*");
+	                }else if(battlefield[row][column]==1){
+	                    System.out.print("\t"+"X");
+	                }
+	                
+	            }
+	            System.out.println();
+	        }
+
+	    }
+
+
+}
