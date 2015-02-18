@@ -7,28 +7,18 @@ public class GamePlay implements Shoot {
 	
 
 	public static void main(String[] args) {
-//		List<String> fields = readingShipsFromFile();
-//		List<Ship> ships = loadShipPatterns(fields);
-//		
-//		for (Ship ship : ships) {
-//			System.out.println(ship);
-//		}
-		
-		
-		Ship[] ships = new Ship[] {
-	            new Ship(1),
-	            new Ship(3),
-	            new Ship(2),
-	            new Ship(3),
-	            new Ship(12)
-	    };
-	    BattleShipBoard battleshipBoard = new BattleShipBoard(20, 10);
-	    battleshipBoard.place(ships);
-	    battleshipBoard.printBoard();
+	List<String> fields = readingShipsFromFile();
+	List<Ship>fleet = loadShipPatterns(fields);
+	
+	
+	for (Ship ship : fleet) {
+		System.out.println(ship);
+	}
+	
 	}
 
 	private static List<String> readingShipsFromFile() {
-		return FileHandler.loadEntireFile("ships");
+		return FileHandler.loadEntireFile("ship");
 	}
 	
 	public static List<Ship> loadShipPatterns(List<String> lines) {

@@ -9,9 +9,7 @@ public class Ship {
 		this.pattern = pattern;
 	}
 	
-	public Ship(int size) {
-		this.size = size;
-	}
+	
 	
 
 	@Override
@@ -28,15 +26,5 @@ public class Ship {
 			sb.append("\n");
 		}
 		return sb.toString();
-	}
-
-
-	public int getSize() {
-		return size;
-	}
-
-
-	public void setSize(int size) {
-		this.size = size;
 	}
 }
