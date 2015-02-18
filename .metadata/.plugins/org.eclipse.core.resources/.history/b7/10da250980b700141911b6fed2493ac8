@@ -1,0 +1,15 @@
+package com;
+
+
+public class GamePlay {
+
+	public static void main(String[] args) {
+		fileRead();
+	}
+
+	private static void fileRead() {
+		FileHandler shipsData = new FileHandler();
+		shipsData.loadEntireFile("ships");
+	}
+
+}

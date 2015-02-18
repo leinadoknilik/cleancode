@@ -1,0 +1,58 @@
+package com;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.Ship;
+
+public class GamePlay implements Shoot {
+	
+	for (Ship ship : ships) {
+		System.out.println(ship);
+	}
+
+	public static void main(String[] args) {
+		List<String> fields = readingShipsFromFile();
+		List<Ship> ships = loadShipPatterns(fields);
+	}
+
+	private static List<String> readingShipsFromFile() {
+		FileHandler shipsData = new FileHandler();
+		return shipsData.loadEntireFile("ships");
+	}
+	
+	public static List<Ship> loadShipPatterns(List<String> lines) {
+		List<Ship> ships = new ArrayList<Ship>();
+		int patternRowIndex = 0;
+		boolean[][] currentPattern = new boolean[4][4];
+		for (String line : lines) {
+			if (patternRowIndex == 4) {
+				int piecesOfThisType = Integer.parseInt(line);
+				for (int i = 0; i < piecesOfThisType; i++) {
+					ships.add(new Ship(currentPattern));
+				}
+				currentPattern = new boolean[4][4];
+				patternRowIndex = 0;
+			} else {
+				for (int patternColumnIndex = 0; patternColumnIndex < line
+						.length(); patternColumnIndex++) {
+					char currentCharacter = line.charAt(patternColumnIndex);
+					if (Character.toLowerCase(currentCharacter) == 'x') {
+						currentPattern[patternRowIndex][patternColumnIndex] = true;
+					} else {
+						currentPattern[patternRowIndex][patternColumnIndex] = false;
+					}
+				}
+				patternRowIndex++;
+			}
+		}
+		return ships;
+	}
+	
+	@Override
+	public void shooting() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

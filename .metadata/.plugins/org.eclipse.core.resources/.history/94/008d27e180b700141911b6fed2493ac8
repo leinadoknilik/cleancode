@@ -1,0 +1,17 @@
+package com;
+
+import java.util.List;
+
+
+public class GamePlay {
+
+	public static void main(String[] args) {
+		fileRead();
+	}
+
+	private static List<String> fileRead() {
+		FileHandler shipsData = new FileHandler();
+		return shipsData.loadEntireFile("ships");
+	}
+
+}

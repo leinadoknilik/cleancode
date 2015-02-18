@@ -1,0 +1,27 @@
+package com;
+
+public class Ship {
+
+	boolean[][] pattern;
+
+	public Ship(boolean[][] pattern) {
+		this.pattern = pattern;
+	}
+	
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < pattern.length; i++) {
+			for (int j = 0; j < pattern[0].length; j++) {
+				if (pattern[i][j]) {
+					sb.append("x");
+				} else {
+					sb.append("-");
+				}
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+}
