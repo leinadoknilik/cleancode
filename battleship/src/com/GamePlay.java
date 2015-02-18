@@ -10,11 +10,9 @@ public class GamePlay implements Shoot {
 	List<String> fields = readingShipsFromFile();
 	List<Ship>fleet = loadShipPatterns(fields);
 	
-	
 	for (Ship ship : fleet) {
 		System.out.println(ship);
 	}
-	
 	}
 
 	private static List<String> readingShipsFromFile() {
