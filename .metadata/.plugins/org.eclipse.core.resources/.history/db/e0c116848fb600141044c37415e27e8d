@@ -1,8 +1,0 @@
-package com;
-
-public class Battle implements Hit {
-
-	String [] battlefield= null;
-	
-	
-}
